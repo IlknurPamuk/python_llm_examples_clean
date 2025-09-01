@@ -1,0 +1,21 @@
+# LangChain ekosistemi (uyumlu sürümler)
+langchain>=0.3.27
+langchain-community>=0.3.27
+langchain-openai>=0.3.30
+langchain-chroma>=0.2.5
+langchain-text-splitters>=0.2.2
+
+# LangGraph (workflow / agent graf yapısı için)
+langgraph>=0.6.6
+langgraph-checkpoint>=2.1.1
+langgraph-prebuilt>=0.6.4
+langgraph-sdk>=0.2.2
+
+# OpenAI API ile bağlantı
+openai>=1.51.0
+
+# Yardımcı kütüphaneler
+tiktoken>=0.7.0
+python-dotenv>=1.0.1
+numexpr>=2.11.0
+numpy>=2.3.2
