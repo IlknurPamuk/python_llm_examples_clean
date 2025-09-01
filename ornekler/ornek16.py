@@ -1,23 +1,21 @@
-# Örnek 16 : vektörize ve text bölme
+# Örnek 23 : retrieval notlandırıcısı
 '''
-from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain_openai import OpenAIEmbeddings
-from langchain_community.vectorstores import FAISS
+from langchain.evaluation import load_evaluator
 from dotenv import load_dotenv
+from langchain_openai import ChatOpenAI
 
 load_dotenv()
-text = """
-yapay zeka modelelri, büyük veri setleri üzerinde eğitilir.
-transformer mimarisi, dikkat (attention) mekanizması ile çalışır.
-LLM ler insan dilini anlamak ve üretmek için  kullanılır.
-"""
-splitter = RecursiveCharacterTextSplitter(
-    chunk_size=50,
-    chunk_overlap=10
+llm = ChatOpenAI(model="gpt-4o")
+
+retrieval_eval = load_evaluator("context_qa", llm=llm)
+expected="Ankara"
+predicted_docs = ["istanbul türkiyenin en büyük şehridirç.", "Ankara Türkiye'nin başkentidir"]
+result = retrieval_eval.evaluate_strings(
+    prediction=";".join(predicted_docs),
+    reference=expected, 
+    input="Türkiye'nin başkenti neresidr"
+
 )
-docs = splitter.split_text(text)
-print("parçalar:", docs)
-embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
-vectorstore = FAISS.from_texts(docs, embeddings)
-print("toplam vektör:", vectorstore.index.ntotal)
+print("Sonuç:",result)
 '''
+

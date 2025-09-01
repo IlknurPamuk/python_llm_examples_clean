@@ -1,23 +1,21 @@
-# Örnek 18 : streaming
+# Örnek 25 : cevap notlandırıcısı
 '''
 from langchain_openai import ChatOpenAI
-from langchain.callbacks.base import BaseCallbackHandler
+from langchain.evaluation import load_evaluator
 from dotenv import load_dotenv
 load_dotenv()
-class StreamHandler(BaseCallbackHandler):
-    def on_llm_new_token(self, token: str, **kwargs) -> None:
-        print(token, end="", flush=True)
 
- 
-llm = ChatOpenAI(
-    model="gpt-4o",
-    streaming=True,
-    callbacks=[StreamHandler()],
-    temperature=0.7
+llm = ChatOpenAI(model="gpt-4o")
+
+answer_eval = load_evaluator("qa", llm=llm)
+
+question = "Türkiye'nin en az nüfüsa sahip ili neresidir?"
+answer = "Türkiye'nin en az nüfusa sahip ili Bayburt'dur."
+result = answer_eval.evaluate_strings(
+    prediction=answer,
+    input=question,
+    reference="Bayburt"
 
 )
-llm.invoke("yapay zekanın gelecekteki en büyük etkilerini açıkla")
-print("\n\nTam cevap:", cevap.content)
+print("değerlendirme:", result)
 '''
-
-

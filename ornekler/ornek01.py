@@ -1,4 +1,4 @@
-# Örnek 1: llm nasıl çalışır?
+# Örnek 01: llm nasıl çalışır?
 
 from openai import OpenAI
 import json

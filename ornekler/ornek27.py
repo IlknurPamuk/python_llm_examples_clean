@@ -1,25 +1,51 @@
-# Örnek 27 : retrieval
-'''
-from langchain_openai import OpenAIEmbeddings, ChatOpenAI
-from langchain_community.vectorstores import FAISS
-from langchain.chains import RetrievalQA
+# Örnek 33 : SQLite
+from langchain_openai import ChatOpenAI
+from langchain_tavily import TavilySearch
+from langgraph.prebuilt import create_react_agent
 from dotenv import load_dotenv
 
+ 
 load_dotenv()
 
-embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
+ 
+llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
 
-docs = [
-  "LLM diğer görevlerin aynı sıra metin tanıyıp üretbilen bir tür AI programıdır",
-  "LLM' ler büyük veri kümleri üzerinde eğitilir.",
-  "LLM'ler makina çğrenmesi üzerinde kuruludur."  
 
-]
-db = FAISS.from_texts(docs, embeddings)
-retriever = db.as_retriever()
-llm = ChatOpenAI(model="gpt-4o")
-qa = RetrievalQA.from_chain_type(llm=llm, retriever=retriever)
+search = TavilySearch(max_results=2)
+tools = [search]
 
-print(qa.run("LLM'ler de hangi öğrenme yöntemi uygulnır?"))
+
+agent = create_react_agent(llm, tools)
+
+
+config = {"configurable": {"thread_id": "test123"}}
+
+
+if __name__ == "__main__":
+    print("🤖 Agent test ediliyor...\n")
+    
+    
+    response1 = agent.invoke(
+        {"messages": [("user", "Merhaba! Sen kimsin?")]}, 
+        config=config
+    )
+    print("Cevap 1:", response1["messages"][-1].content)
+    print("-" * 50)
+    
+    
+    response2 = agent.invoke(
+        {"messages": [("user", "Dün bana ne demiştin?")]}, 
+        config=config
+    )
+    print("Cevap 2:", response2["messages"][-1].content)
+    print("-" * 50)
+    
+    
+    response3 = agent.invoke(
+        {"messages": [("user", "Türkiye'nin başkenti nedir?")]}, 
+        config=config
+    )
+    print("Cevap 3:", response3["messages"][-1].content)
+
+    '''
 '''
-

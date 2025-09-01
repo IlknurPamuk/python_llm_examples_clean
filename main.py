@@ -1,7 +1,7 @@
 
  
 '''
-# Örnek 1: llm nasıl çalışır?
+# Örnek 01: llm nasıl çalışır?
 
 from openai import OpenAI
 import json
@@ -29,7 +29,7 @@ print(data.get("kaynak", "belirtilmemiş"))
 
  
 '''
-# Örnek 2 : llm orkestrasyonu
+# Örnek 02 : llm orkestrasyonu
 from langchain_openai import ChatOpenAI
 from langchain.agents import initialize_agent, Tool
 from dotenv import load_dotenv
@@ -50,7 +50,7 @@ tools = [
 agent = initialize_agent(tools, llm, agent_type="zero-shot-react-description")
 print(agent.run("12 ile 8'i topla ve sonucu bana anlat"))
 '''
-# Örnek 3 : langchain
+# Örnek 03 : langchain
 '''
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
@@ -67,7 +67,7 @@ print("model cevabı:", sonuc.content)
 
 '''
 
-# Örnek 4 : langchain çeviri
+# Örnek 04 : langchain çeviri
 '''
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
@@ -90,7 +90,7 @@ soru = "Dünyanın en yüksek dağı hangsidir?"
 print("sonuç:", overall_chain.run(soru))
 '''
 
-# Örnek 5 : mesajı hafızaya kaydetmek
+# Örnek 05 : mesajı hafızaya kaydetmek
 '''
 from langchain_openai import ChatOpenAI
 from langchain.memory import ConversationBufferMemory
@@ -109,7 +109,7 @@ print(conversation.run("merhaba ben ilknur"))
 print(conversation.run("beni hatırlıyor musun?"))
 '''
 
-# Örnek 6: json formatında cvb alma
+# Örnek 06: json formatında cvb alma
 '''
 from langchain_openai import ChatOpenAI
 from langchain.prompts import ChatPromptTemplate
@@ -136,7 +136,7 @@ result= chain.run({"soru": "Türkiye'nin başeknti neredir?", "format_instr": fo
 print(parser.parse(result))
 '''
 
-# Örnek 7 : prompt
+# Örnek 07 : prompt
 '''
 
 from langchain.prompts import ChatPromptTemplate
@@ -159,7 +159,7 @@ print("cevap2:", soru2.content)
 
 
 
-# Örnek 8 : langserve
+# Örnek 08 : langserve
 '''
 from fastapi import FastAPI
 from langserve import add_routes
@@ -178,7 +178,7 @@ chain = prompt | llm
 add_routes(app, chain, path="/chat")
 '''
 
-# Örnek 9 : langchain
+# Örnek 09 : langchain
 '''
 from langchain_openai import ChatOpenAI
 from langchain.chains import LLMChain
@@ -801,7 +801,7 @@ if __name__ == "__main__":
     app.run(debug=True)
 '''
 
-### Örnek 32 : Flask, Bellek, Tool
+# Örnek 32 : Flask, Bellek, Tool
 '''
 from flask import Flask, request, jsonify
 from langchain_openai import ChatOpenAI

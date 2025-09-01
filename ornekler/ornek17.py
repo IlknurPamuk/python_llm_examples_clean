@@ -1,19 +1,30 @@
-# Örnek 17 : hub
+# Örnek 24 : halisinasyon notlandırıcısı
 '''
-from langchain import hub
 from langchain_openai import ChatOpenAI
+from langchain.evaluation import load_evaluator
 from dotenv import load_dotenv
 
 load_dotenv()
-
-prompt = hub.pull("rlm/rag-prompt")#özetleme yapar
 llm = ChatOpenAI(model="gpt-4o")
+custom_criteria = {
+    "hallucination": "Cevap, verilen bağlamda yer almayan veya yanlış bilgilerle uyduruyor mu?"
+}
 
-chain = prompt | llm
-cevap = chain.invoke({ 
-    "context": "langchain LLM'lerle çalışma süreci hakkında bilgiler.",
-    "question": "Bu sürecci nasıl kolaylaştır?"
-})
-print("özet:", cevap.content)
+hallucination_eval = load_evaluator(
+    "criteria",
+    criteria=custom_criteria,
+    llm=llm
+)
+
+context = "ankara türkiyenin başkentidir."
+answer = "Türkiye'nin başkenti İstanbul'dur."
+result = hallucination_eval.evaluate_strings(
+    prediction=answer,
+    input="Türkiye'nin başkenti neresidir?",
+    reference=context
+)
+
+print("sonuç:", result)
 '''
+
 

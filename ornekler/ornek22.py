@@ -1,31 +1,32 @@
-# Örnek 22 : agent memory ####
+# Örnek 29 :
 '''
+from langchain_community.tools.tavily_search import TavilySearchResults
+from langchain.agents import initialize_agent, AgentType
 from langchain_openai import ChatOpenAI
-from langchain.agents import initialize_agent, Tool, AgentType
-from langchain.memory import ConversationBufferMemory
 from dotenv import load_dotenv
+ 
 
 load_dotenv()
 
-llm = ChatOpenAI(model="gpt-4o")
+llm = ChatOpenAI(model="gpt-4o", temperature=0)
 
-def hesapla(expression):
-    return eval(expression)
-
-tools = [
-    Tool(name="hesaplama", func=hesapla, description="matematiksel işlemler yapar.")
-
-]
-memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
-
+search = TavilySearchResults(max_results=2)
+tools = [search]
 agent = initialize_agent(
     tools=tools,
     llm=llm,
-    agent_type=AgentType.CONVERSATIONAL_REACT_DESCRIPTION,
-    memory=memory,
+    agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION,
     verbose=True
+
 )
-print(agent.run("merhaba ben ilknur"))
-print(agent.run("12*8 kaç eder"))
-print(agent.run("beni hatırlıyor musun"))
+if __name__ == "__main__":
+    print("🤖chatbota hosşgeldiniz çıkmak için 'exit' yazın.")
+    while True:
+        user_input = input("> ")
+        if user_input.lower() in ["exit", "quit"]:
+            break
+        response = agent.run(user_input)
+        print(response)
+        '''
 '''
+

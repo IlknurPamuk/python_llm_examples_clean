@@ -1,4 +1,4 @@
-# Örnek 6: json formatında cvb alma
+# Örnek 06: json formatında cvb alma
 '''
 from langchain_openai import ChatOpenAI
 from langchain.prompts import ChatPromptTemplate

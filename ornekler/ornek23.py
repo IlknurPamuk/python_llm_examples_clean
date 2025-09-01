@@ -1,21 +1,17 @@
-# Örnek 23 : retrieval notlandırıcısı
+# Örnek 03 : langchain
 '''
-from langchain.evaluation import load_evaluator
-from dotenv import load_dotenv
 from langchain_openai import ChatOpenAI
-
+from langchain_core.prompts import ChatPromptTemplate
+from dotenv import load_dotenv
 load_dotenv()
+
 llm = ChatOpenAI(model="gpt-4o")
 
-retrieval_eval = load_evaluator("context_qa", llm=llm)
-expected="Ankara"
-predicted_docs = ["istanbul türkiyenin en büyük şehridirç.", "Ankara Türkiye'nin başkentidir"]
-result = retrieval_eval.evaluate_strings(
-    prediction=";".join(predicted_docs),
-    reference=expected, 
-    input="Türkiye'nin başkenti neresidr"
+prompt = ChatPromptTemplate.from_template("Soru: {soru}")
 
-)
-print("Sonuç:",result)
+sonuc = llm.invoke(prompt.format(soru="Türkiye'nin en büyük yüz ölçümüne sahip şehri hangisidir?"))
+
+print("model cevabı:", sonuc.content)
+
 '''
 

@@ -1,19 +1,21 @@
-# Örnek 13 : vektörstore
+# Örnek 20 : agent
 '''
-from langchain_openai import OpenAIEmbeddings
-from langchain_community.vectorstores import FAISS
+from langchain_openai import ChatOpenAI
+from langchain.agents import initialize_agent, Tool
+from langchain_community.tools import DuckDuckGoSearchRun
 from dotenv import load_dotenv
-
 load_dotenv()
+llm = ChatOpenAI(model="gpt-4o")
 
-embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
-texts = [
-    "Ankara Türkiyenin başkentidir.",
-    "İstanbul Türkiye'nin en büyük şeridir.",
-    "İzmir ege bölgesinde bir liman kentidir.",    
+def hesapla(expression):
+    return eval(expression)
+
+tools = [
+    Tool(name="Hesaplama", func=hesapla, description="matematik işlemleri yapar"),
+    Tool(name="web arama", func=DuckDuckGoSearchRun().run, description="internetten blgi alır")
 ]
-vectorstore = FAISS.from_texts(texts, embeddings)
-print("vector sayısı:", vectorstore.index.ntotal)
-
+agent = initialize_agent(tools, llm, agent_type="zero-shot-react-destription", verbose=True)
+print(agent.run("12 * 8 kaç eder?"))
+print(agent.run("Türkiye de en çok kullanılan kız isimleri?"))
 '''
 

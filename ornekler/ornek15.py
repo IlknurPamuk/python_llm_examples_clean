@@ -1,24 +1,31 @@
-# Örnek 15 : internetten veri çekmek
+# Örnek 22 : agent memory ####
 '''
-from langchain_community.tools import DuckDuckGoSearchRun
 from langchain_openai import ChatOpenAI
-from langchain.agents import initialize_agent, Tool
+from langchain.agents import initialize_agent, Tool, AgentType
+from langchain.memory import ConversationBufferMemory
 from dotenv import load_dotenv
 
 load_dotenv()
 
-llm = ChatOpenAI(model="gpt-4o", temperature=0)
+llm = ChatOpenAI(model="gpt-4o")
 
-search = DuckDuckGoSearchRun()
+def hesapla(expression):
+    return eval(expression)
+
 tools = [
-    Tool(
-        name="web arama",
-        func=search.run,
-        description="internetten veri aramak için kullanılır"
-    )
-]
-agent = initialize_agent(tools, llm, agent_type="zero-shot-react-description", verbose=True)
-cevap = agent.run("Türkiyenin 2023 nüfusu nedir?")
-print("cevap:", cevap)
-'''
+    Tool(name="hesaplama", func=hesapla, description="matematiksel işlemler yapar.")
 
+]
+memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
+
+agent = initialize_agent(
+    tools=tools,
+    llm=llm,
+    agent_type=AgentType.CONVERSATIONAL_REACT_DESCRIPTION,
+    memory=memory,
+    verbose=True
+)
+print(agent.run("merhaba ben ilknur"))
+print(agent.run("12*8 kaç eder"))
+print(agent.run("beni hatırlıyor musun"))
+'''

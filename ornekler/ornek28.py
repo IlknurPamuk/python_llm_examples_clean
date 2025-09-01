@@ -1,40 +1,51 @@
-# Örnek 28 : cevap kontrol
-'''
-from langchain.evaluation import load_evaluator
-from langchain_openai import ChatOpenAI
+# Örnek 34 : SQLite
 from dotenv import load_dotenv
+import sqlite3
+
 load_dotenv()
+conn = sqlite3.connect("okul.db")
+cursor = conn.cursor()
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS ogrenciler(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,  --Her öğrenciye otomatik ID ver
+    ad TEXT ,                              -- Öğrencinin adı
+    soyad TEXT ,                           -- Öğrencinin soyadı
+    notu INTEGER                           -- Öğrencinin notu
+)
+""")
+def ogrenci_ekle(ad, soyad, notu):
+    cursor.execute("INSERT INTO ogrenciler (ad, soyad, notu) VALUES (?, ?, ?)", (ad, soyad, notu))
+    conn.commit()
 
-llm = ChatOpenAI(model="gpt-4o")
+def ogrencileri_listele():
+    cursor.execute("SELECT * FROM ogrenciler")
+    ogrenciler = cursor.fetchall()
+    for ogrenci in ogrenciler:
+        print(ogrenci)
 
-criteria = {
-    "correctness": "cevap doğru bilgi içeriyormu"
-}
-evaluator = load_evaluator("criteria", criteria=criteria, llm=llm)
+def notları_guncelle(ogrenci_id, yeni_not):
+    cursor.execute("UPDATE ogrenciler SET notu = ? WHERE id = ?", (yeni_not, ogrenci_id))
+    conn.commit()
 
-context = "penguenler kutup bölegelerinde yaşarlar"
-answer = "penguenler çölde yaşarlar."
-result = evaluator.invoke({
-    "input": "Penguenler hangi bölgelerde yaşar",
-    "output": answer,
-    "reference": context
-})
+def notları_sil(ogrenci_id):
+    cursor.execute("DELETE FROM ogrenciler WHERE id = ?", (ogrenci_id,))
+    conn.commit()
 
-print(result)
+def listele():
+    return ogrenciler
+
+ogrenci_ekle("Ali", "Yılmaz", 85)
+ogrenci_ekle("Ayşe", "Kara", 90)
+ogrenci_ekle("Mehmet", "Demir", 78)
+
+print("Öğrenciler:", ogrencileri_listele())
+
+notları_guncelle(1, 95)
+print("Güncel Liste:", ogrencileri_listele())
+
+ogrenci_ekle("Fatma", "Çelik", 88)
+print("Güncellenmiş Öğrenciler:", ogrencileri_listele())
+
 '''
-'''
-from cleverbotfree import Cleverbot
 
-@Cleverbot.connect
-def chat(bot, user_prompt, bot_prompt):
-    while True:
-        user_input = input(user_prompt)
-        if user_input == "quit":
-            break
-        reply = bot.single_helloexchange(user_input)#text ister
-        print(bot_prompt, reply)
-    bot.close()
-
-chat("You:", "Cleverbot:")
-'''
 

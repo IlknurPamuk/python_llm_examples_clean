@@ -1,21 +1,60 @@
-# Örnek 25 : cevap notlandırıcısı
+# Örnek 31 : Flask API
 '''
-from langchain_openai import ChatOpenAI
-from langchain.evaluation import load_evaluator
+from flask import Flask, request, jsonify
+from openai import OpenAI
 from dotenv import load_dotenv
+
 load_dotenv()
 
-llm = ChatOpenAI(model="gpt-4o")
+app = Flask(__name__)
+client = OpenAI()
 
-answer_eval = load_evaluator("qa", llm=llm)
+ 
+def add_numbers(a, b):
+    return a + b
 
-question = "Türkiye'nin en az nüfüsa sahip ili neresidir?"
-answer = "Türkiye'nin en az nüfusa sahip ili Bayburt'dur."
-result = answer_eval.evaluate_strings(
-    prediction=answer,
-    input=question,
-    reference="Bayburt"
+def multiply_numbers(a, b):
+    return a * b
 
-)
-print("değerlendirme:", result)
+custom_functions = {
+    "add": add_numbers,
+    "multiply": multiply_numbers
+}
+
+@app.route("/start", methods=["GET", "POST"])
+def chat():
+    
+    if request.method == "GET":
+        return "Start endpoint GET isteği çalıştı!"
+
+    
+    if request.method == "POST":
+        try:
+            data = request.get_json()
+            user_message = data.get("message", "")
+            function_call = data.get("function", None)
+
+
+           
+            if function_call and function_call in custom_functions:
+                args = data.get("args", {})
+                result = custom_functions[function_call](**args)
+                return jsonify({"result": result})
+
+             
+            response = client.chat.completions.create(
+                model="gpt-4o",
+                messages=[
+                    {"role": "system", "content": "Sen bir yardımcı asistansın"},
+                    {"role": "user", "content": user_message}
+                ]
+            )
+            return jsonify({"response": response.choices[0].message.content})
+            
+        except Exception as e:
+            return jsonify({"error": str(e)})
+
+if __name__ == "__main__":
+    app.run(debug=True)
 '''
+

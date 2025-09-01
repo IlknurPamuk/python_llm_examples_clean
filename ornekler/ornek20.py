@@ -1,21 +1,25 @@
-# Örnek 20 : agent
+# Örnek 27 : retrieval
 '''
-from langchain_openai import ChatOpenAI
-from langchain.agents import initialize_agent, Tool
-from langchain_community.tools import DuckDuckGoSearchRun
+from langchain_openai import OpenAIEmbeddings, ChatOpenAI
+from langchain_community.vectorstores import FAISS
+from langchain.chains import RetrievalQA
 from dotenv import load_dotenv
+
 load_dotenv()
-llm = ChatOpenAI(model="gpt-4o")
 
-def hesapla(expression):
-    return eval(expression)
+embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
 
-tools = [
-    Tool(name="Hesaplama", func=hesapla, description="matematik işlemleri yapar"),
-    Tool(name="web arama", func=DuckDuckGoSearchRun().run, description="internetten blgi alır")
+docs = [
+  "LLM diğer görevlerin aynı sıra metin tanıyıp üretbilen bir tür AI programıdır",
+  "LLM' ler büyük veri kümleri üzerinde eğitilir.",
+  "LLM'ler makina çğrenmesi üzerinde kuruludur."  
+
 ]
-agent = initialize_agent(tools, llm, agent_type="zero-shot-react-destription", verbose=True)
-print(agent.run("12 * 8 kaç eder?"))
-print(agent.run("Türkiye de en çok kullanılan kız isimleri?"))
+db = FAISS.from_texts(docs, embeddings)
+retriever = db.as_retriever()
+llm = ChatOpenAI(model="gpt-4o")
+qa = RetrievalQA.from_chain_type(llm=llm, retriever=retriever)
+
+print(qa.run("LLM'ler de hangi öğrenme yöntemi uygulnır?"))
 '''
 

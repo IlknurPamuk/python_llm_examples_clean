@@ -1,32 +1,40 @@
-# Örnek 21 : agent entegrasyonu
-
+# Örnek 28 : cevap kontrol
 '''
+from langchain.evaluation import load_evaluator
 from langchain_openai import ChatOpenAI
-from langchain.agents import initialize_agent, Tool
 from dotenv import load_dotenv
-import requests
-import os
-
 load_dotenv()
-taviy_key = os.getenv("TAVILY_API_KEY")
 
 llm = ChatOpenAI(model="gpt-4o")
 
-def tavily_search(query: str):
-    url = "https://api.tavily.com/search"
-    headers = {"Authorization": "Bearer tv_XXXXXXX"}
-    resp = requests.post(url, headers=headers, json={"q": query})
-    return resp.json()
+criteria = {
+    "correctness": "cevap doğru bilgi içeriyormu"
+}
+evaluator = load_evaluator("criteria", criteria=criteria, llm=llm)
 
-def hesapla(exp):
-    return eval(exp)
-tools = [
-    Tool(name="hesaplama", func=hesapla, description="matematik işlemleri yapar"),
-    Tool(name="Tavily arama", func=tavily_search, description="Tavily ile internetten arama yapar.")
-]
-agent = initialize_agent(tools, llm, agent_type="zero-shot-react-description", verbose=True)
-print(agent.run("200 * 10 kaç eder?"))
-print(agent.run("Bugün Türkiye'nin enflasyon oranı nedir"))
+context = "penguenler kutup bölegelerinde yaşarlar"
+answer = "penguenler çölde yaşarlar."
+result = evaluator.invoke({
+    "input": "Penguenler hangi bölgelerde yaşar",
+    "output": answer,
+    "reference": context
+})
 
+print(result)
+'''
+'''
+from cleverbotfree import Cleverbot
+
+@Cleverbot.connect
+def chat(bot, user_prompt, bot_prompt):
+    while True:
+        user_input = input(user_prompt)
+        if user_input == "quit":
+            break
+        reply = bot.single_helloexchange(user_input)#text ister
+        print(bot_prompt, reply)
+    bot.close()
+
+chat("You:", "Cleverbot:")
 '''
 

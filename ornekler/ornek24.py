@@ -1,30 +1,39 @@
-# Örnek 24 : halisinasyon notlandırıcısı
-'''
+# Örnek 30 : Tavily ile arama
+from langchain_tavily import TavilySearch
 from langchain_openai import ChatOpenAI
-from langchain.evaluation import load_evaluator
-from dotenv import load_dotenv
+from langchain.agents import AgentExecutor
+from langgraph.prebuilt import create_react_agent
+from langchain.memory import ConversationSummaryMemory
+from dotenv import load_dotenv 
 
 load_dotenv()
-llm = ChatOpenAI(model="gpt-4o")
-custom_criteria = {
-    "hallucination": "Cevap, verilen bağlamda yer almayan veya yanlış bilgilerle uyduruyor mu?"
-}
 
-hallucination_eval = load_evaluator(
-    "criteria",
-    criteria=custom_criteria,
-    llm=llm
+model = ChatOpenAI(model="gpt-4o", temperature=0)
+
+search = TavilySearch(max_results=2)
+tools = [search]
+
+# LangGraph'ta sadece model ve tools gerekiyor
+agent = create_react_agent(
+    model,
+    tools
 )
 
-context = "ankara türkiyenin başkentidir."
-answer = "Türkiye'nin başkenti İstanbul'dur."
-result = hallucination_eval.evaluate_strings(
-    prediction=answer,
-    input="Türkiye'nin başkenti neresidir?",
-    reference=context
-)
+config = {"configurable": {"thread_id": "abc123"}}
 
-print("sonuç:", result)
+if __name__ == "__main__":
+    print("🤖 chat başlatıldı. Çıkmak için 'exit' e basın")
+    while True:
+        user_input = input("> ")
+        if user_input.lower() in ["exit", "quit"]:
+            print("başarıyla çıkış yapıldı...")
+            break
+
+        response = agent.invoke(
+            {"input": user_input},
+            config=config
+        )
+        print(response)
+
+
 '''
-
-

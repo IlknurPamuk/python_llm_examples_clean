@@ -1,20 +1,21 @@
-# Örnek 12 : streaming ve memory
-'''
+# Örnek 02 : llm orkestrasyonu
 from langchain_openai import ChatOpenAI
-from langchain.memory import ConversationBufferMemory
-from langchain.chains import ConversationChain 
-from langchain.callbacks.base import BaseCallbackHandler
+from langchain.agents import initialize_agent, Tool
 from dotenv import load_dotenv
-
 load_dotenv()
-class StreamHandler(BaseCallbackHandler):
-    def on_llm_new_token(self, token: str, **kwargs) -> None:
-        print(token, end="", flush=True)
 
-llm = ChatOpenAI(model="gpt-4o", streaming=True, callbacks=[StreamHandler()])
-memory = ConversationBufferMemory()
-conversation = ConversationChain(llm=llm, memory=memory)
-print("\n----Streaming Cevap----")
-conversation.run("yapay zekann geleceğini anlat")
+llm = ChatOpenAI(model="gpt-4o")
+
+def toplama(x,y):
+    return int(x) + int(y)
+
+tools = [
+    Tool(
+        name="toplama araci",
+        func=lambda x: toplama(*[s.strip(" ()") for s in x.split(",")]),
+        description="iki sayiyi toplayan araçtır."
+    )
+]
+agent = initialize_agent(tools, llm, agent_type="zero-shot-react-description")
+print(agent.run("12 ile 8'i topla ve sonucu bana anlat"))
 '''
-

@@ -1,57 +1,20 @@
-# Örnek 35 : Flask API
+# Örnek 09 : langchain
 '''
-from flask import Flask, request, jsonify
-import sqlite3
+from langchain_openai import ChatOpenAI
+from langchain.chains import LLMChain
+from langchain.prompts import ChatPromptTemplate
 from dotenv import load_dotenv
+import os 
+
 load_dotenv()
 
-app = Flask(__name__)
+os.environ["LANGCHAIN_TRACİNG_V2"] = "true"
+os.environ["LANGCHAIN_API_KEY"] = "lc-123456"
 
-@app.route("/")
-def home():
-    return "hoşgeldiniz flask sistemi çalışıyor"
+llm = ChatOpenAI(model="gpt-4o")
+prompt = ChatPromptTemplate.from_template("Soru: {soru}")
+chain = prompt | llm
 
-
-def get_db():
-    conn = sqlite3.connect("okul.db")
-    conn.row_factory = sqlite3.Row
-    return conn
-
-@app.route("/ogrenciler", methods=["GET"])
-def ogrencileri_listele_api():
-    conn = get_db()
-    cursor = conn.cursor()
-    cursor.execute("SELECT * FROM ogrenciler")
-    ogrenciler = [dict(row) for row in cursor.fetchall()]
-    return jsonify(ogrenciler)
-
-@app.route("/ekle", methods=["POST"])
-def ekle():
-    data = request.json
-    conn = get_db()
-    cursor = conn.cursor()
-    cursor.execute("INSERT INTO ogrenciler (ad, soyad, notu) VALUES (?, ?, ?)",
-                   (data["ad"], data["soyad"], data["notu"]))
-    conn.commit()
-    return jsonify({"message": "Öğrenci eklendi."})
-
-@app.route("/guncelle/<int:id>", methods=["PUT"])
-def guncelle(id):
-    data = request.json
-    conn = get_db()
-    cursor = conn.cursor()
-    cursor.execute("UPDATE ogrenciler SET notu = ? WHERE id = ?", (data["notu"])),
-    conn.commit()
-    return jsonify({"mesaj": "not guncellendi"})
-
-@app.route("/sil/<int:id>", methods=["DELETE"])
-def sil(id):
-    conn = get_db()
-    cursor = conn.cursor()
-    cursor.execute("DELETE FROM ogrenciler WHERE id = ?", (id,))
-    conn.commit()
-    return jsonify({"mesaj": "öğrenci silindi"})
-
-if __name__ == "__main__":
-    app.run(debug=True)
+print(chain.invoke("LLM orkestrasyonu nedir?"))
 '''
+
