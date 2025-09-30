@@ -1,0 +1,39 @@
+# LLM Alıştırmaları (Otomatik İndeks)
+
+## Örnekler
+- [00-icerik.py](ornekler/00-icerik.py) — Icerik
+- [01-llm-nasil-calisir.py](ornekler/01-llm-nasil-calisir.py) — Llm Nasil Calisir
+- [02-mesajlasma-tarihi.py](ornekler/02-mesajlasma-tarihi.py) — Mesajlasma Tarihi
+- [03-mesaj-gecmisi.py](ornekler/03-mesaj-gecmisi.py) — Mesaj Gecmisi
+- [04-streaming-ve-memory.py](ornekler/04-streaming-ve-memory.py) — Streaming Ve Memory
+- [05-vektorstore.py](ornekler/05-vektorstore.py) — Vektorstore
+- [06-rag.py](ornekler/06-rag.py) — Rag
+- [07-internetten-veri-cekmek.py](ornekler/07-internetten-veri-cekmek.py) — Internetten Veri Cekmek
+- [08-vektorize-ve-text-bolme.py](ornekler/08-vektorize-ve-text-bolme.py) — Vektorize Ve Text Bolme
+- [09-hub.py](ornekler/09-hub.py) — Hub
+- [10-streaming.py](ornekler/10-streaming.py) — Streaming
+- [11-rag.py](ornekler/11-rag.py) — Rag
+- [12-llm-orkestrasyonu.py](ornekler/12-llm-orkestrasyonu.py) — Llm Orkestrasyonu
+- [13-agent.py](ornekler/13-agent.py) — Agent
+- [14-agent-entegrasyonu.py](ornekler/14-agent-entegrasyonu.py) — Agent Entegrasyonu
+- [15-agent-memory.py](ornekler/15-agent-memory.py) — Agent Memory
+- [16-retrieval-notlandiricisi.py](ornekler/16-retrieval-notlandiricisi.py) — Retrieval Notlandiricisi
+- [17-halisinasyon-notlandiricisi.py](ornekler/17-halisinasyon-notlandiricisi.py) — Halisinasyon Notlandiricisi
+- [18-cevap-notlandiricisi.py](ornekler/18-cevap-notlandiricisi.py) — Cevap Notlandiricisi
+- [19-agent-tool-kullanimi.py](ornekler/19-agent-tool-kullanimi.py) — Agent Tool Kullanimi
+- [20-retrieval.py](ornekler/20-retrieval.py) — Retrieval
+- [21-cevap-kontrol.py](ornekler/21-cevap-kontrol.py) — Cevap Kontrol
+- [22-icerik.py](ornekler/22-icerik.py) — Icerik
+- [23-langchain.py](ornekler/23-langchain.py) — Langchain
+- [24-tavily-ile-arama.py](ornekler/24-tavily-ile-arama.py) — Tavily Ile Arama
+- [25-flask-api.py](ornekler/25-flask-api.py) — Flask Api
+- [26-flask-bellek-tool.py](ornekler/26-flask-bellek-tool.py) — Flask Bellek Tool
+- [27-sqlite.py](ornekler/27-sqlite.py) — Sqlite
+- [28-sqlite.py](ornekler/28-sqlite.py) — Sqlite
+- [29-flask-api.py](ornekler/29-flask-api.py) — Flask Api
+- [30-langchain-ceviri.py](ornekler/30-langchain-ceviri.py) — Langchain Ceviri
+- [31-mesaji-hafizaya-kaydetmek.py](ornekler/31-mesaji-hafizaya-kaydetmek.py) — Mesaji Hafizaya Kaydetmek
+- [32-json-formatinda-cvb-alma.py](ornekler/32-json-formatinda-cvb-alma.py) — Json Formatinda Cvb Alma
+- [33-prompt.py](ornekler/33-prompt.py) — Prompt
+- [34-langserve.py](ornekler/34-langserve.py) — Langserve
+- [35-langchain.py](ornekler/35-langchain.py) — Langchain
