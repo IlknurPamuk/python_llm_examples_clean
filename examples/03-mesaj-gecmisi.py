@@ -13,8 +13,8 @@ memory = ConversationBufferMemory(return_messages=True)
 
 conversation = ConversationChain(llm=llm, memory=memory)
 
-conversation.run("benim adım ilknur")
-conversation.run("doğum yılımı ve nerde doğduğumu hatırlıyormusun?")
+conversation.run("Benim adım ilknur")
+conversation.run("Doğum yılımı ve nerde doğduğumu hatırlıyormusun?")
 print("\n----Konuşma Geçmişi----")
 
 for msg in memory.chat_memory.messages:
