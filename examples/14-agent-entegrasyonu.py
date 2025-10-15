@@ -21,11 +21,11 @@ def tavily_search(query: str):
 def hesapla(exp):
     return eval(exp)
 tools = [
-    Tool(name="hesaplama", func=hesapla, description="matematik işlemleri yapar"),
+    Tool(name="hesaplama", func=hesapla, description="Matematik işlemleri yapar"),
     Tool(name="Tavily arama", func=tavily_search, description="Tavily ile internetten arama yapar.")
 ]
 agent = initialize_agent(tools, llm, agent_type="zero-shot-react-description", verbose=True)
-print(agent.run("200 * 10 kaç eder?"))
+print(agent.run("200 * 10 sonucu hesaplar mısın ?"))
 print(agent.run("Bugün Türkiye'nin enflasyon oranı nedir"))
 
 '''
