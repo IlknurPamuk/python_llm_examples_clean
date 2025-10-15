@@ -14,11 +14,11 @@ tools = [
     Tool(
         name="web arama",
         func=search.run,
-        description="internetten veri aramak için kullanılır"
+        description="İnternetten veri aramak için kullanılır"
     )
 ]
 agent = initialize_agent(tools, llm, agent_type="zero-shot-react-description", verbose=True)
-cevap = agent.run("Türkiyenin 2023 nüfusu nedir?")
+cevap = agent.run("Türkiye'nin 2023 nüfusu nedir?")
 print("cevap:", cevap)
 '''
 
