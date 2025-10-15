@@ -9,7 +9,7 @@ load_dotenv()
 embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
 texts = [
     "Ankara Türkiyenin başkentidir.",
-    "İstanbul Türkiye'nin en büyük şeridir.",
+    "İstanbul Türkiye'nin en büyük şehridir.",
     "İzmir ege bölgesinde bir liman kentidir.",    
 ]
 vectorstore = FAISS.from_texts(texts, embeddings)
