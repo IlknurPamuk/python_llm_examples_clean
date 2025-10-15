@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 text = """
-Yapay zeka modelelri, büyük veri setleri üzerinde eğitilir.
+Yapay zeka modelleri, büyük veri setleri üzerinde eğitilir.
 Transformer mimarisi, dikkat (attention) mekanizması ile çalışır.
 LLM ler insan dilini anlamak ve üretmek için  kullanılır.
 """
