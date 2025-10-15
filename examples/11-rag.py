@@ -10,8 +10,8 @@ load_dotenv()
 
 docs = [
     "ankara Türkiye'nin başkrntidir.",
-    "istanbul türkiyenin en kalabalık şehridir.",
-    "everest dünyanın en yüksek dağıdır"
+    "istanbul Türkiye'nin en kalabalık şehridir.",
+    "Everest Dünya'nın en yüksek dağıdır"
 ]
 
 embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
@@ -21,6 +21,6 @@ llm = ChatOpenAI(model="gpt-4o")
 assistant = RetrievalQA.from_chain_type(llm=llm, retriever=retriever, chain_type="stuff")
 
 print("Soru:", "Türkiyenin başkenti neresidir")
-print("asistan:", assistant.run("türkiyenin başkenti neresi?"))
+print("asistan:", assistant.run("Türkiye'nin başkenti neresidir?"))
 '''
 
