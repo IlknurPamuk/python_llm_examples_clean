@@ -7,8 +7,8 @@ from dotenv import load_dotenv
 
 load_dotenv()
 text = """
-yapay zeka modelelri, büyük veri setleri üzerinde eğitilir.
-transformer mimarisi, dikkat (attention) mekanizması ile çalışır.
+Yapay zeka modelelri, büyük veri setleri üzerinde eğitilir.
+Transformer mimarisi, dikkat (attention) mekanizması ile çalışır.
 LLM ler insan dilini anlamak ve üretmek için  kullanılır.
 """
 splitter = RecursiveCharacterTextSplitter(
