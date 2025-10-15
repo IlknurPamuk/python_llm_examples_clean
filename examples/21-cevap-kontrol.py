@@ -12,10 +12,10 @@ criteria = {
 }
 evaluator = load_evaluator("criteria", criteria=criteria, llm=llm)
 
-context = "penguenler kutup bölegelerinde yaşarlar"
-answer = "penguenler çölde yaşarlar."
+context = "Penguenler kutup bölegelerinde yaşarlar"
+answer = "Penguenler çölde yaşarlar."
 result = evaluator.invoke({
-    "input": "Penguenler hangi bölgelerde yaşar",
+    "input": "Penguenler hangi bölgelerde yaşar?",
     "output": answer,
     "reference": context
 })
