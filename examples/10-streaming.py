@@ -16,7 +16,7 @@ llm = ChatOpenAI(
     temperature=0.7
 
 )
-llm.invoke("yapay zekanın gelecekteki en büyük etkilerini açıkla")
+llm.invoke("Yapay zekanın gelecekteki en büyük etkilerini açıklar mısın?")
 print("\n\nTam cevap:", cevap.content)
 '''
 
