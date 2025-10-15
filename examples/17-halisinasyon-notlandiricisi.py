@@ -16,7 +16,7 @@ hallucination_eval = load_evaluator(
     llm=llm
 )
 
-context = "ankara türkiyenin başkentidir."
+context = "Ankara Türkiye'nin başkentidir."
 answer = "Türkiye'nin başkenti İstanbul'dur."
 result = hallucination_eval.evaluate_strings(
     prediction=answer,
