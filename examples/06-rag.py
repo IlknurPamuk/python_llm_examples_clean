@@ -19,7 +19,7 @@ qa_chain = RetrievalQA.from_chain_type(
     chain_type="stuff" #belgeleri topla + cevapla
 )
 
-cevap = qa_chain.run("Tüekiyenin en kalabalık şehri hangisidir?")
-print("cevap:", cevap)
+cevap = qa_chain.run("Türkiye'nin en kalabalık şehri hangisidir?")
+print("Cevap:", cevap)
 '''
 
