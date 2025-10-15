@@ -25,7 +25,7 @@ agent = initialize_agent(
     memory=memory,
     verbose=True
 )
-print(agent.run("merhaba ben ilknur"))
-print(agent.run("12*8 kaç eder"))
-print(agent.run("beni hatırlıyor musun"))
+print(agent.run("Merhaba ben İlknur"))
+print(agent.run("12*8 cevabunun söyler misin ?"))
+print(agent.run("İsmimi hatırlıyor musun?"))
 '''
