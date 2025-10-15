@@ -26,7 +26,7 @@ if __name__ == "__main__":
     while True:
         user_input = input("> ")
         if user_input.lower() in ["exit", "quit"]:
-            print("başarıyla çıkış yapıldı...")
+            print("Başarıyla çıkış yapıldı...")
             break
 
         response = agent.invoke(
