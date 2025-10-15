@@ -9,7 +9,7 @@ llm = ChatOpenAI(model="gpt-4o")
 
 retrieval_eval = load_evaluator("context_qa", llm=llm)
 expected="Ankara"
-predicted_docs = ["istanbul türkiyenin en büyük şehridirç.", "Ankara Türkiye'nin başkentidir"]
+predicted_docs = ["istanbul  Türkiye'nin en büyük şehridir.", "Ankara Türkiye'nin başkentidir"]
 result = retrieval_eval.evaluate_strings(
     prediction=";".join(predicted_docs),
     reference=expected, 
